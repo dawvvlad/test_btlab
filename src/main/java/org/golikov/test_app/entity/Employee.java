@@ -1,13 +1,10 @@
 package org.golikov.test_app.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.util.List;
 
 @Entity
 @Table(name = "employees")
-@Data
 public class Employee {
     @Id
     @Column(name = "id")
@@ -24,5 +21,27 @@ public class Employee {
     private List<Timesheet> timesheets;
 
     public Employee() {}
+
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
 }

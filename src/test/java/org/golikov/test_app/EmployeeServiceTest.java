@@ -1,8 +1,9 @@
-package org.golikov.test_app.service.employee;
+package org.golikov.test_app;
 
 import org.golikov.test_app.dto.EmployeeDTO;
 import org.golikov.test_app.entity.Employee;
 import org.golikov.test_app.repos.EmployeeRepository;
+import org.golikov.test_app.service.employee.EmployeeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class EmployeeServiceImplTest {
+class EmployeeServiceTest {
 
     @Mock
     private EmployeeRepository employeeRepository;
