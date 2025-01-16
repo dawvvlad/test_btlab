@@ -78,6 +78,8 @@ class EmployeeServiceTest {
         assertEquals("John", result.getFirstName());
         assertEquals("Doe", result.getLastName());
         verify(employeeRepository, times(1)).getEmployeesById(id);
+
+        System.out.println(result);
     }
 
     @Test

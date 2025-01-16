@@ -22,6 +22,7 @@ public class Employee {
 
     public Employee() {}
 
+    // геттеры и сеттеры
     public String getFirstName() {
         return firstName;
     }

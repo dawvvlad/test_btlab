@@ -20,6 +20,8 @@ public class EmployeeDTO {
         this.firstName = employee.getFirstName();
     }
 
+
+    // геттеры и сеттеры
     public Long getId() {
         return id;
     }
@@ -39,4 +41,9 @@ public class EmployeeDTO {
         this.firstName = firstName;
     }
 
+
+    @Override
+    public String toString() {
+        return "EmployeeDTO {id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + "}";
+    }
 }
