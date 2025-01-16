@@ -1,4 +1,4 @@
-package org.golikov.test_app;
+package org.golikov.test_app.service;
 
 import org.golikov.test_app.dto.EmployeeDTO;
 import org.golikov.test_app.entity.Employee;
