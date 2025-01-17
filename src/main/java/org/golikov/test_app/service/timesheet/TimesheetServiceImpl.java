@@ -1,29 +1,45 @@
 package org.golikov.test_app.service.timesheet;
 
 
+import org.golikov.test_app.dto.TimesheetCreateRequest;
 import org.golikov.test_app.dto.TimesheetDTO;
+import org.golikov.test_app.entity.Employee;
 import org.golikov.test_app.entity.Timesheet;
+import org.golikov.test_app.repos.EmployeeRepository;
 import org.golikov.test_app.repos.TimesheetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TimesheetServiceImpl implements TimesheetService{
 
     private final TimesheetRepository timesheetRepository;
-    public TimesheetServiceImpl(TimesheetRepository timesheetRepository) {
+    private final EmployeeRepository employeeRepository;
+
+    @Autowired
+    public TimesheetServiceImpl(TimesheetRepository timesheetRepository, EmployeeRepository employeeRepository) {
         this.timesheetRepository = timesheetRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Transactional
     @Override
-    public TimesheetDTO create(TimesheetDTO timesheetDTO) {
-        Timesheet timesheet = timesheetDTO.convertToEntity();
-        timesheetRepository.save(timesheet);
+    public void create(TimesheetCreateRequest timesheetCreateRequest) {
+        Timesheet timesheet = new Timesheet();
+        Employee employee = employeeRepository.getReferenceById(timesheetCreateRequest.getEmployeeId());
+        
+        timesheet.setDescription(timesheetCreateRequest.getDescription());
+        timesheet.setStartDate(timesheetCreateRequest.getStartDate());
+        timesheet.setDiscounted(timesheetCreateRequest.getDiscounted());
+        timesheet.setReason(timesheetCreateRequest.getReason());
+        timesheet.setDuration(timesheetCreateRequest.getDuration());
+        timesheet.setEmployee(employee);
 
-        return timesheetDTO;
+        timesheetRepository.save(timesheet);
     }
 
     @Transactional
@@ -57,12 +73,21 @@ public class TimesheetServiceImpl implements TimesheetService{
     @Transactional
     @Override
     public TimesheetDTO update(TimesheetDTO timesheetDTO) {
-        return null;
+        Timesheet timesheet = timesheetDTO.convertToEntity();
+        timesheetRepository.save(timesheet);
+        return timesheetDTO;
     }
 
     @Transactional
     @Override
     public List<TimesheetDTO> getAll() {
-        return List.of();
+        List<Timesheet> timesheetList = timesheetRepository.findAll();
+        List<TimesheetDTO> timesheetDTOList = new ArrayList<>();
+
+        for (Timesheet timesheet : timesheetList) {
+            TimesheetDTO timesheetDTO = new TimesheetDTO(timesheet);
+            timesheetDTOList.add(timesheetDTO);
+        }
+        return timesheetDTOList;
     }
 }

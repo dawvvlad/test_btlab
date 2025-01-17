@@ -45,4 +45,7 @@ public class Employee {
         this.firstName = firstName;
     }
 
+    public List<Timesheet> getTimesheets() {
+        return timesheets;
+    }
 }

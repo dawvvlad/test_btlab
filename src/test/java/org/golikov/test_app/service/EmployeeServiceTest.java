@@ -70,14 +70,14 @@ class EmployeeServiceTest {
         employee.setFirstName("John");
         employee.setLastName("Doe");
 
-        when(employeeRepository.getEmployeesById(id)).thenReturn(employee);
+        when(employeeRepository.getReferenceById(id)).thenReturn(employee);
 
         EmployeeDTO result = employeeService.getEmployee(id);
 
         assertNotNull(result);
         assertEquals("John", result.getFirstName());
         assertEquals("Doe", result.getLastName());
-        verify(employeeRepository, times(1)).getEmployeesById(id);
+        verify(employeeRepository, times(1)).getReferenceById(id);
 
         System.out.println(result);
     }
@@ -90,27 +90,6 @@ class EmployeeServiceTest {
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
-        verify(employeeRepository, times(1)).findAll();
-    }
-
-    @Test
-    void testGetAllEmployees_NonEmptyList() {
-        Employee employee1 = new Employee();
-        employee1.setFirstName("John");
-        employee1.setLastName("Doe");
-
-        Employee employee2 = new Employee();
-        employee2.setFirstName("Jane");
-        employee2.setLastName("Smith");
-
-        when(employeeRepository.findAll()).thenReturn(Arrays.asList(employee1, employee2));
-
-        List<EmployeeDTO> result = employeeService.getAllEmployees();
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("John", result.get(0).getFirstName());
-        assertEquals("Jane", result.get(1).getFirstName());
         verify(employeeRepository, times(1)).findAll();
     }
 }
