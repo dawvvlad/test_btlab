@@ -1,4 +1,10 @@
 package org.golikov.test_app.service.timesheet;
 
-public class TimesheetServiceImpl {
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class TimesheetServiceImpl implements TimesheetService{
+
+
 }

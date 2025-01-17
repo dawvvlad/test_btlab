@@ -1,4 +1,6 @@
 package org.golikov.test_app.service.timesheet;
 
-public class TimesheetService {
+public interface TimesheetService {
+
+
 }

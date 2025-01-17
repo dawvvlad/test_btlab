@@ -47,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             Employee employee = employeeRepository.getEmployeesById(id);
             EmployeeDTO employeeDTO = new EmployeeDTO();
+            employeeDTO.setId(employee.getId());
             employeeDTO.setFirstName(employee.getFirstName());
             employeeDTO.setLastName(employee.getLastName());
             return employeeDTO;
