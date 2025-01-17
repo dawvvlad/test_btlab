@@ -33,6 +33,10 @@ public class Timesheet {
 
     public Timesheet() {}
 
+
+
+    // геттеры и сеттеры
+
     public Long getId() {
         return id;
     }

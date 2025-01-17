@@ -1,6 +1,14 @@
 package org.golikov.test_app.service.timesheet;
 
-public interface TimesheetService {
+import org.golikov.test_app.dto.TimesheetDTO;
 
+import java.util.List;
+
+public interface TimesheetService {
+    TimesheetDTO create(TimesheetDTO timesheetDTO);
+    boolean delete(Long id);
+    TimesheetDTO getById(Long id);
+    TimesheetDTO update(TimesheetDTO timesheetDTO);
+    List<TimesheetDTO> getAll();
 
 }

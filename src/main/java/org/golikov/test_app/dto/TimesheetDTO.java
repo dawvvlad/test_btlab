@@ -1,5 +1,8 @@
 package org.golikov.test_app.dto;
 
+import org.golikov.test_app.entity.Employee;
+import org.golikov.test_app.entity.Timesheet;
+
 import java.util.Date;
 
 public class TimesheetDTO {
@@ -22,6 +25,37 @@ public class TimesheetDTO {
         this.discounted = discounted;
     }
 
+    public TimesheetDTO(Timesheet timesheet) {
+        this.id = timesheet.getId();
+        this.reason = timesheet.getReason();
+        this.employee = new EmployeeDTO(timesheet.getEmployee());
+        this.startDate = timesheet.getStartDate();
+        this.duration = timesheet.getDuration();
+        this.description = timesheet.getDescription();
+        this.discounted = timesheet.getDiscounted();
+    }
+
+    public Timesheet convertToEntity() {
+        Timesheet timesheet = new Timesheet();
+        Employee employee = new Employee();
+
+        if(this.employee != null) {
+            employee.setId(this.employee.getId());
+            employee.setFirstName(this.employee.getFirstName());
+            employee.setLastName(this.employee.getLastName());
+
+            timesheet.setEmployee(employee);
+        }
+
+        timesheet.setId(this.id);
+        timesheet.setReason(this.reason);
+        timesheet.setDescription(this.description);
+        timesheet.setStartDate(this.startDate);
+        timesheet.setDuration(this.duration);
+        timesheet.setDiscounted(this.discounted);
+
+        return timesheet;
+    }
 
     // геттеры и сеттеры
     public Long getId() {
