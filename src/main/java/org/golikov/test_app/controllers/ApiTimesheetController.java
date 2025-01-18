@@ -18,12 +18,12 @@ import java.util.Map;
 **/
 @RestController
 @RequestMapping("api/v1/timesheet")
-public class ApiTimeSheetController {
+public class ApiTimesheetController {
 
     private final TimesheetService timesheetService;
 
     @Autowired
-    public ApiTimeSheetController(TimesheetService timesheetService) {
+    public ApiTimesheetController(TimesheetService timesheetService) {
         this.timesheetService = timesheetService;
     }
 
