@@ -37,13 +37,10 @@ public class TimesheetDTO {
 
     public Timesheet convertToEntity() {
         Timesheet timesheet = new Timesheet();
-        Employee employee = new Employee();
 
-        if(this.employee != null) {
+        if (this.employee != null && this.employee.getId() != null) {
+            Employee employee = new Employee();
             employee.setId(this.employee.getId());
-            employee.setFirstName(this.employee.getFirstName());
-            employee.setLastName(this.employee.getLastName());
-
             timesheet.setEmployee(employee);
         }
 

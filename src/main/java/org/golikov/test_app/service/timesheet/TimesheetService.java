@@ -9,7 +9,7 @@ public interface TimesheetService {
     void create(TimesheetCreateRequest timesheetCreateRequest);
     boolean delete(Long id);
     TimesheetDTO getById(Long id);
-    TimesheetDTO update(TimesheetDTO timesheetDTO);
+    TimesheetDTO update(TimesheetCreateRequest timesheetDTO);
     List<TimesheetDTO> getAll();
 
 }

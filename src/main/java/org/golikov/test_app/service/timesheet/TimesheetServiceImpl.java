@@ -30,14 +30,17 @@ public class TimesheetServiceImpl implements TimesheetService{
     @Override
     public void create(TimesheetCreateRequest timesheetCreateRequest) {
         Timesheet timesheet = new Timesheet();
-        Employee employee = employeeRepository.getReferenceById(timesheetCreateRequest.getEmployeeId());
-        
+
+        // Проверяем, существует ли указанный сотрудник
+        Employee employee = employeeRepository.findById(timesheetCreateRequest.getEmployeeId())
+                .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
+
+        timesheet.setEmployee(employee);
         timesheet.setDescription(timesheetCreateRequest.getDescription());
         timesheet.setStartDate(timesheetCreateRequest.getStartDate());
         timesheet.setDiscounted(timesheetCreateRequest.getDiscounted());
         timesheet.setReason(timesheetCreateRequest.getReason());
         timesheet.setDuration(timesheetCreateRequest.getDuration());
-        timesheet.setEmployee(employee);
 
         timesheetRepository.save(timesheet);
     }
@@ -60,22 +63,44 @@ public class TimesheetServiceImpl implements TimesheetService{
     @Override
     public TimesheetDTO getById(Long id) {
         Timesheet timesheet = timesheetRepository.findById(id).orElse(null);
-        TimesheetDTO timesheetDTO;
-
         if(timesheet == null) {
-            timesheetDTO = new TimesheetDTO();
-        } else {
             return null;
+        } else {
+            return new TimesheetDTO(timesheet);
         }
-        return timesheetDTO;
     }
 
     @Transactional
     @Override
-    public TimesheetDTO update(TimesheetDTO timesheetDTO) {
-        Timesheet timesheet = timesheetDTO.convertToEntity();
-        timesheetRepository.save(timesheet);
-        return timesheetDTO;
+    public TimesheetDTO update(TimesheetCreateRequest timesheetDTO) {
+        Timesheet existingTimesheet = timesheetRepository.findById(timesheetDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Timesheet not found"));
+
+        Employee employee = employeeRepository.getReferenceById(timesheetDTO.getEmployeeId());
+
+        if (timesheetDTO.getReason() != null) {
+            existingTimesheet.setReason(timesheetDTO.getReason());
+        }
+        if (timesheetDTO.getDescription() != null) {
+            existingTimesheet.setDescription(timesheetDTO.getDescription());
+        }
+        if (timesheetDTO.getStartDate() != null) {
+            existingTimesheet.setStartDate(timesheetDTO.getStartDate());
+        }
+        if (timesheetDTO.getDuration() != null) {
+            existingTimesheet.setDuration(timesheetDTO.getDuration());
+        }
+        if (timesheetDTO.getDiscounted() != null) {
+            existingTimesheet.setDiscounted(timesheetDTO.getDiscounted());
+        }
+
+        if(timesheetDTO.getEmployeeId() != null) {
+            existingTimesheet.setEmployee(employee);
+        }
+
+        timesheetRepository.save(existingTimesheet);
+
+        return new TimesheetDTO(existingTimesheet);
     }
 
     @Transactional
