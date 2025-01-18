@@ -13,7 +13,7 @@ public class Timesheet {
     private Long id;
 
     @JoinColumn(name = "employee")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Employee employee;
 
     @Column(name = "reason")

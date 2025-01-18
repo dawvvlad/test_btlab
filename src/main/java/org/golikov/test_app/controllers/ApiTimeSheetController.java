@@ -42,6 +42,14 @@ public class ApiTimeSheetController {
         return ResponseEntity.status(HttpStatus.OK).body(timesheetDTO);
     }
 
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTimesheetById(@PathVariable Long id) {
+        timesheetService.delete(id);
+        System.out.println("deleted timesheet");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<TimesheetDTO> updateTimesheetById(
             @PathVariable Long id,
@@ -53,7 +61,6 @@ public class ApiTimeSheetController {
         if (existingTimesheet == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
 
         TimesheetCreateRequest timesheetCreateRequest = new TimesheetCreateRequest(existingTimesheet);
         updates.forEach((key, value) -> {

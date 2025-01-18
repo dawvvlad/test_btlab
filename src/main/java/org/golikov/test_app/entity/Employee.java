@@ -17,7 +17,7 @@ public class Employee {
     @Column(name = "first_name")
     private String firstName;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     private List<Timesheet> timesheets;
 
     public Employee() {}
