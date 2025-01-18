@@ -46,13 +46,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO getEmployee(Long id) {
         try {
             Employee employee = employeeRepository.getReferenceById(id);
+
+            if(employee == null) {
+                return null;
+            }
             EmployeeDTO employeeDTO = new EmployeeDTO();
             employeeDTO.setId(employee.getId());
             employeeDTO.setFirstName(employee.getFirstName());
             employeeDTO.setLastName(employee.getLastName());
             return employeeDTO;
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

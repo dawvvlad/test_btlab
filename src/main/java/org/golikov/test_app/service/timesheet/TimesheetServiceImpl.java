@@ -31,7 +31,6 @@ public class TimesheetServiceImpl implements TimesheetService{
     public void create(TimesheetCreateRequest timesheetCreateRequest) {
         Timesheet timesheet = new Timesheet();
 
-        // Проверяем, существует ли указанный сотрудник
         Employee employee = employeeRepository.findById(timesheetCreateRequest.getEmployeeId())
                 .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
 

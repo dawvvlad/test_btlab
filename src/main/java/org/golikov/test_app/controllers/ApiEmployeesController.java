@@ -1,6 +1,7 @@
 package org.golikov.test_app.controllers;
 
 import org.golikov.test_app.dto.EmployeeDTO;
+import org.golikov.test_app.exceptions.NoSuchValueException;
 import org.golikov.test_app.service.employee.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class ApiEmployeesController {
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Long id) {
         EmployeeDTO employeeDTO = employeeService.getEmployee(id);
+        if (employeeDTO == null) {
+            throw new NoSuchValueException("Employee with id " + id + " not found");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(employeeDTO);
     }
 }

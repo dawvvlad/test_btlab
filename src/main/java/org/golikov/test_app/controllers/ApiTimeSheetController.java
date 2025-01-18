@@ -3,6 +3,7 @@ package org.golikov.test_app.controllers;
 
 import org.golikov.test_app.dto.TimesheetCreateRequest;
 import org.golikov.test_app.dto.TimesheetDTO;
+import org.golikov.test_app.exceptions.NoSuchValueException;
 import org.golikov.test_app.service.timesheet.TimesheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,12 @@ public class ApiTimeSheetController {
 
     @PostMapping
     public ResponseEntity<TimesheetCreateRequest> createTimesheet(@RequestBody TimesheetCreateRequest timesheetCreateRequest) {
-        timesheetService.create(timesheetCreateRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(timesheetCreateRequest);
+        try {
+            timesheetService.create(timesheetCreateRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(timesheetCreateRequest);
+        } catch (Exception e) {
+            throw new NoSuchValueException("Incorrect data (Employee with id " + timesheetCreateRequest.getEmployeeId() + " not found)");
+        }
     }
 
     @GetMapping
@@ -39,9 +44,12 @@ public class ApiTimeSheetController {
     public ResponseEntity<TimesheetDTO> getTimesheetById(@PathVariable Long id) {
         TimesheetDTO timesheetDTO = timesheetService.getById(id);
 
+        if (timesheetDTO == null) {
+            throw new NoSuchValueException("Timesheet with id " + id + " not found");
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(timesheetDTO);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTimesheetById(@PathVariable Long id) {
@@ -59,7 +67,7 @@ public class ApiTimeSheetController {
         TimesheetDTO existingTimesheet = timesheetService.getById(id);
 
         if (existingTimesheet == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new NoSuchValueException("Timesheet with id " + id + " not found");
         }
 
         TimesheetCreateRequest timesheetCreateRequest = new TimesheetCreateRequest(existingTimesheet);
