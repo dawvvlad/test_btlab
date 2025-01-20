@@ -1,10 +1,12 @@
 package org.golikov.test_app.dto;
 
+import lombok.ToString;
 import org.golikov.test_app.entity.Employee;
 import org.golikov.test_app.entity.Timesheet;
 
 import java.util.Date;
 
+@ToString
 public class TimesheetDTO {
     private Long id;
     private Integer reason;

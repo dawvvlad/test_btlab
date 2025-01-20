@@ -121,7 +121,13 @@ public class ApiTimesheetController {
         });
 
 
+        System.out.println(existingTimesheet);
+        System.out.println(updates);
+        System.out.println(timesheetCreateRequest);
+
         TimesheetDTO updatedTimesheet = timesheetService.update(timesheetCreateRequest);
+
+        System.out.println(updatedTimesheet);
         return ResponseEntity.status(HttpStatus.OK).body(updatedTimesheet);
     }
 
