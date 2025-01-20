@@ -104,16 +104,16 @@ public class ApiTimesheetController {
                     timesheetCreateRequest.setEmployeeId(((Number) value).longValue());
                     break;
                 case "startDate":
-                    existingTimesheet.setStartDate(java.sql.Date.valueOf((String) value)); // Преобразуем строку в дату
+                    timesheetCreateRequest.setStartDate(java.sql.Date.valueOf((String) value)); // Преобразуем строку в дату
                     break;
                 case "duration":
-                    existingTimesheet.setDuration((Integer) value);
+                    timesheetCreateRequest.setDuration((Integer) value);
                     break;
                 case "description":
-                    existingTimesheet.setDescription((String) value);
+                    timesheetCreateRequest.setDescription((String) value);
                     break;
                 case "discounted":
-                    existingTimesheet.setDiscounted((Boolean) value);
+                    timesheetCreateRequest.setDiscounted((Boolean) value);
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown field: " + key);
@@ -121,13 +121,13 @@ public class ApiTimesheetController {
         });
 
 
-        System.out.println(existingTimesheet);
-        System.out.println(updates);
-        System.out.println(timesheetCreateRequest);
-
         TimesheetDTO updatedTimesheet = timesheetService.update(timesheetCreateRequest);
 
         System.out.println(updatedTimesheet);
+
+        System.out.println("Received updates: " + updates);
+        System.out.println("Existing timesheet before update: " + existingTimesheet);
+
         return ResponseEntity.status(HttpStatus.OK).body(updatedTimesheet);
     }
 

@@ -93,15 +93,16 @@ public class TimesheetServiceImpl implements TimesheetService{
         if (timesheetDTO.getDiscounted() != null) {
             existingTimesheet.setDiscounted(timesheetDTO.getDiscounted());
         }
-
         if(timesheetDTO.getEmployeeId() != null) {
             existingTimesheet.setEmployee(employee);
         }
 
         timesheetRepository.save(existingTimesheet);
 
+
         return new TimesheetDTO(existingTimesheet);
     }
+
 
     @Transactional
     @Override
